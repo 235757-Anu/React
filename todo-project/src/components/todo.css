@@ -50,7 +50,22 @@
     justify-content: space-between;
     width: 45%;
 }
+.textInside{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
 .symbol{
     display: flex;
     justify-content: end;
+}
+.none{
+    border: none;
+    padding: 6px 10px;
+    width: 60%;
+}
+#okButton{
+    background-color: rgb(240, 230, 218) ;
+    color: black;
+    border-radius: 10px;
 }

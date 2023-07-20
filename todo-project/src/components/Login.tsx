@@ -10,16 +10,16 @@ function Login(){
                  <div className="header">
                     LOGIN
                  </div>
-                 <div className="inputs">
-                     <input className="username" placeholder="Enter the username" />
-                     <input className="password" placeholder="Enter the password" type='password' />
-                 </div>
-                 <div className="reg">
-                    Don't have an account?<Link to='/signup'>Signup</Link>
-                 </div>
-                 <div style={{display: "flex",justifyContent: "center"}}>
-                     <button className="submit" onClick={()=>navigate('/todo')}>Login</button>
-                 </div>
+                 <form className="inputs" onSubmit={()=>navigate('/todo')}>
+                     <input className="username" placeholder="Enter the username" required/>
+                     <input className="password" placeholder="Enter the password" type='password' required/>
+                    <div className="reg">
+                        Don't have an account?<Link to='/signup'>Signup</Link>
+                    </div>
+                    <div style={{display: "flex",justifyContent: "center"}}>
+                        <button className="submit">Login</button>
+                    </div>
+                 </form>
              </div>
          </div>
      )

@@ -8,14 +8,15 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 function Todo() {
   const [tasks, setTasks] = useState<string[]>([]);
   const [newTask, setNewTask] = useState<string>('');
-  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [newTask1, setNewTask1] = useState<string>('');
+  const [editIndex,setEditIndex] = useState<number>(-1);
 
   const handleDelete = (index: number) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
   };
   const handleEdit = (index: number) => {
-    setEditIndex(index);
+    setEditIndex(index)
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,15 +30,17 @@ function Todo() {
       setNewTask('');
     }
   };
-  const handleSave = () => {
-    if (newTask.trim() !== '') {
-      const updatedTasks = [...tasks];
-      updatedTasks[editIndex as number] = newTask.trim();
-      setTasks(updatedTasks);
-      setEditIndex(null);
-      setNewTask('');
-    }
-  };
+
+  const changeTask = (event)=>{
+      setNewTask1(event.target.value);
+  }
+
+  const updateTask=()=>{
+    const updatedTasks = [...tasks]; // Create a copy of the tasks array
+      updatedTasks[editIndex] = newTask1; // Update the task at the editIndex with the new value from the input
+      setTasks(updatedTasks); // Update the tasks state with the updated array
+      setEditIndex(-1); // Reset the editIndex to -1 to exit the edit mode
+  }
 
   return (
     <div>
@@ -64,8 +67,9 @@ function Todo() {
         <div className="list" id="list">
           {tasks.map((task, index) => (
             <div className="items" key={index}>
-
-              <label>{task}</label>
+              {
+                editIndex!=index?<div>{task}</div>:<div className="textInside"><input type="text" onChange={changeTask} placeholder={task} className='none'/> <button id="okButton" onClick={updateTask}>Ok</button></div>
+              }
               <div className="symbol">
                 <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(index)} style={{ cursor: "pointer" }} />
                 <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} style={{ cursor: "pointer", marginLeft: "15px" }} />
