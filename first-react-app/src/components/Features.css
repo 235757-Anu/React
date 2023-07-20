@@ -1,0 +1,12 @@
+#box{
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: #efeeed;
+    border-color: grey;
+}
+h2{
+    margin-left: 2%;
+}
+/* .con{
+    margin-left: 2%;
+} */

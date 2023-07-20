@@ -1,0 +1,17 @@
+li::marker{
+    color: aqua;
+}
+h1{
+    color: white;
+    font-size: 35px;
+}
+ul{
+    font-weight: 500;
+    font-size: 30px;
+}
+.con{
+    background-color: rgb(40, 39, 39);
+    background-image: url('https://tse2.mm.bing.net/th/id/OIP.XMJOqsxF3JuXexojdz01FQHaEK?pid=ImgDet&rs=1');
+    background-size: cover;
+    height: 39rem;
+}
