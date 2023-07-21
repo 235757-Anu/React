@@ -68,12 +68,11 @@ function Todo() {
           {tasks.map((task, index) => (
             <div className="items" key={index}>
               {
-                editIndex!=index?<div>{task}</div>:<div className="textInside"><input type="text" onChange={changeTask} placeholder={task} className='none'/> <button id="okButton" onClick={updateTask}>Ok</button></div>
+                editIndex!=index?<div>{task}</div>:<form className="textInside"><input type="text" onChange={changeTask} placeholder={task} id="none" className='none'/> <button type="submit" id="okButton" onClick={updateTask}></button></form>
               }
               <div className="symbol">
                 <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(index)} style={{ cursor: "pointer" }} />
                 <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} style={{ cursor: "pointer", marginLeft: "15px" }} />
-
               </div>
             </div>
           ))}
