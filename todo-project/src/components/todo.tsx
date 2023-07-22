@@ -9,7 +9,7 @@ function Todo() {
   const [tasks, setTasks] = useState<string[]>([]);
   const [newTask, setNewTask] = useState<string>('');
   const [newTask1, setNewTask1] = useState<string>('');
-  const [editIndex,setEditIndex] = useState<number>(-1);
+  const [editIndex, setEditIndex] = useState<number>(-1);
 
   const handleDelete = (index: number) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
@@ -31,16 +31,30 @@ function Todo() {
     }
   };
 
-  const changeTask = (event)=>{
-      setNewTask1(event.target.value);
+  const changeTask = (event) => {
+    setNewTask1(event.target.value);
   }
 
-  const updateTask=()=>{
+  const updateTask = () => {
     const updatedTasks = [...tasks]; // Create a copy of the tasks array
-      updatedTasks[editIndex] = newTask1; // Update the task at the editIndex with the new value from the input
-      setTasks(updatedTasks); // Update the tasks state with the updated array
-      setEditIndex(-1); // Reset the editIndex to -1 to exit the edit mode
+    updatedTasks[editIndex] = newTask1; // Update the task at the editIndex with the new value from the input
+    setTasks(updatedTasks); // Update the tasks state with the updated array
+    setEditIndex(-1); // Reset the editIndex to -1 to exit the edit mode
   }
+
+  const allowDrop = (event) => {
+    event.preventDefault();
+  };
+
+  const drag = (event) => {
+    event.dataTransfer.setData('text', event.target.id);
+  };
+
+  const drop = (event) => {
+    event.preventDefault();
+    const fetchData = event.dataTransfer.getData('text');
+    event.target.appendChild(document.getElementById(fetchData));
+  };
 
   return (
     <div>
@@ -50,32 +64,41 @@ function Todo() {
         </div>
       </div>
       <main className="c">
-        <form className="form" onSubmit={handleSubmit}>
-          <h1 className="headings">To-Do List</h1>
-          <div className="form-group">
-            <input
-              type="text"
-              className="add"
-              id="add"
-              placeholder="Add new task"
-              value={newTask}
-              onChange={handleInputChange}
-            />
-            <button type="submit" id="todo" className="adds">Add</button>
-          </div>
-        </form>
-        <div className="list" id="list">
-          {tasks.map((task, index) => (
-            <div className="items" key={index}>
-              {
-                editIndex!=index?<div>{task}</div>:<form className="textInside"><input type="text" onChange={changeTask} placeholder={task} id="none" className='none'/> <button type="submit" id="okButton" onClick={updateTask}></button></form>
-              }
-              <div className="symbol">
-                <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(index)} style={{ cursor: "pointer" }} />
-                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} style={{ cursor: "pointer", marginLeft: "15px" }} />
-              </div>
+        <div className="left">
+          <form className="form" onSubmit={handleSubmit}>
+            <h1 className="headings">To-Do List</h1>
+            <div className="form-group">
+              <input
+                type="text"
+                className="add"
+                id="add"
+                placeholder="Add new task"
+                value={newTask}
+                onChange={handleInputChange}
+              />
+              <button type="submit" id="todo" className="adds">Add</button>
             </div>
-          ))}
+          </form>
+          <div className="list" id="list">
+            {tasks.map((task, index) => (
+              <div className="items" id="dragData" draggable="true"
+                onDragStart={drag} key={index}>
+                {
+                  editIndex != index ? <div>{task}</div> : <form className="textInside"><input type="text" onChange={changeTask} placeholder={task} id="none" className='none' /> <button type="submit" id="okButton" onClick={updateTask}></button></form>
+                }
+                <div className="symbol">
+                  <FontAwesomeIcon icon={faPenToSquare} onClick={() => handleEdit(index)} style={{ cursor: "pointer" }} />
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} style={{ cursor: "pointer", marginLeft: "15px" }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="right" id="getData" onDrop={drop}
+              onDragOver={allowDrop}>
+          <form className="complete">
+            <h1>Completed</h1>
+          </form>
         </div>
       </main>
     </div>
